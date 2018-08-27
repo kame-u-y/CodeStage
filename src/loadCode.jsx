@@ -9,6 +9,8 @@ export class LoadCode extends React.Component {
             files: null,
             extension: "",
             code: "",
+            codeElem: null,
+            callbackFlag: true,
         }
     }
 
@@ -20,7 +22,6 @@ export class LoadCode extends React.Component {
     }
 
     
-
     displayCode(ev) {
         const file = this.state.files[0];
         
@@ -39,15 +40,19 @@ export class LoadCode extends React.Component {
         const fileReader = new FileReader();
 
         fileReader.onload = () => {
+
             this.setState({
                 extension: extensionValue,
                 code: fileReader.result,
             });
+            // this.props.callback();
+            this.setState({callbackFlag: true});
+
         };
         fileReader.readAsText(file);
     }
 
-
+    
     render() {
         return (
             <div>
@@ -61,7 +66,14 @@ export class LoadCode extends React.Component {
                     onClick={(ev)=>this.displayCode(ev)}
                 />
                 <div ref={(elem)=>{
-                        // console.log( this.props.callback(elem) );
+                        if(elem!==null) {
+                            const underCodeTag = elem.children[0].children[0].children[0];
+                            if(underCodeTag!==null && this.state.callbackFlag){
+                                this.props.callback(elem);
+                                this.setState({codeElem: elem});
+                                this.setState({callbackFlag: false})
+                            }
+                        }
                     }}>
                     <SyntaxHighlighter 
                         language={this.state.extension}

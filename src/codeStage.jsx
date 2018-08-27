@@ -10,15 +10,23 @@ export class CodeStage extends React.Component {
 
 
     getCodeElem() {
-        return this.state.elem
+        return this.props.element;
     }
 
 
     render() {
-        const elements = this.getCodeElem();
-        console.log(elements);
+        if(this.props.element==="") {
+            return null;
+        }
+
+        const codeTag = this.props.element.children[0].children[0];
+        if(!codeTag.children[0]) {
+            return null;
+        }
+
         return (
-            <div>
+            <div dangerouslySetInnerHTML={{__html: codeTag.innerHTML}}>
+
             </div>
         )
     }
