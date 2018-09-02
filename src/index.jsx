@@ -1,6 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {CodeStage} from './codeStage';
 import {LoadCode} from './loadCode';
 
 
