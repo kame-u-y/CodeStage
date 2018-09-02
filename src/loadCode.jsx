@@ -1,4 +1,5 @@
 import React from 'react';
+import {CodeStage} from './codeStage';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { railscasts } from 'react-syntax-highlighter/styles/hljs';
 
@@ -65,13 +66,14 @@ export class LoadCode extends React.Component {
                     value="反映" 
                     onClick={(ev)=>this.displayCode(ev)}
                 />
-                <div ref={(elem)=>{
+                <CodeStage element={this.state.codeElem} />
+                <div className="highlight-data" ref={(elem)=>{
                         if(elem!==null) {
                             const underCodeTag = elem.children[0].children[0].children[0];
                             if(underCodeTag!==null && this.state.callbackFlag){
-                                this.props.callback(elem);
+                                // this.props.callback(elem);
                                 this.setState({codeElem: elem});
-                                this.setState({callbackFlag: false})
+                                this.setState({callbackFlag: false});
                             }
                         }
                     }}>
